@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101b3f"><title>Selah Quiz · EBIPEP</title><style>
+:root{
+ --navy:#101b3f;--navy2:#1a2d61;--blue:#2468d8;--gold:#f2c94c;--cream:#f5f1e7;--paper:#fffdf8;
+ --ink:#17213c;--muted:#67718a;--line:#e6e0d2;--red:#e64b5d;--green:#28a66a;--yellow:#f2b632;
+ --shadow:0 12px 30px rgba(16,27,63,.13);--radius:22px;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #7aa9ff;outline-offset:3px}
+.topbar{height:72px;background:var(--navy);color:white;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,54px);border-bottom:4px solid var(--gold);position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.2px}.brand-mark{height:42px;width:42px;border-radius:14px;background:var(--gold);display:grid;place-items:center;color:var(--navy);font-size:25px;box-shadow:0 4px 0 #b88a16}.brand small{display:block;color:#dce4ff;font-size:11px;font-weight:650;letter-spacing:1.2px;margin-top:-2px}
+.top-actions{display:flex;gap:8px;align-items:center}.status{font-size:12px;font-weight:800;background:#263966;color:#dbe5ff;border:1px solid #41558a;padding:7px 10px;border-radius:999px}
+.wrap{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:28px 0 70px}.screen{display:none}.screen.active{display:block;animation:appear .25s ease}@keyframes appear{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.btn{border:0;border-radius:14px;padding:13px 18px;font-weight:850;box-shadow:0 4px 0 rgba(0,0,0,.18);transition:transform .12s,filter .12s}.btn:hover{filter:brightness(1.04);transform:translateY(-1px)}.btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.2)}.btn-gold{background:var(--gold);color:#342600}.btn-blue{background:var(--blue);color:white}.btn-dark{background:var(--navy);color:white}.btn-light{background:white;color:var(--navy);border:1px solid var(--line);box-shadow:0 3px 0 #e2dccf}.btn-ghost{background:transparent;color:var(--navy);border:2px solid #d6cdaF;box-shadow:none}.btn-red{background:var(--red);color:white}.btn-sm{padding:9px 12px;font-size:13px;border-radius:11px}.btn-block{width:100%}
+.eyebrow{font-size:12px;font-weight:900;letter-spacing:1.6px;text-transform:uppercase;color:#9a7410}.muted{color:var(--muted)}.small{font-size:13px}.section-title{font:800 clamp(24px,3vw,36px)/1.1 Georgia,serif;color:var(--navy);margin:7px 0 10px}.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;background:linear-gradient(135deg,#101b3f 0%,#1a3671 100%);color:white;padding:clamp(24px,5vw,54px);border-radius:30px;overflow:hidden;position:relative;box-shadow:0 12px 0 #d9c99c,0 22px 40px rgba(16,27,63,.17)}
+.hero:after{content:"";position:absolute;width:420px;height:420px;border:1px solid rgba(255,255,255,.1);border-radius:50%;right:-120px;top:-170px;box-shadow:0 0 0 35px rgba(255,255,255,.025),0 0 0 75px rgba(255,255,255,.02)}
+.hero h1{font:900 clamp(42px,6vw,76px)/.98 Georgia,serif;margin:8px 0 16px;letter-spacing:-1.5px}.hero h1 span{color:var(--gold)}.hero p{max-width:540px;color:#d7e1ff;font-size:17px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.hero-art{min-height:280px;position:relative;display:flex;align-items:center;justify-content:center;z-index:1}.hero-stage{width:min(100%,390px);background:#fff8e8;border-radius:30px;padding:22px 18px 18px;transform:rotate(3deg);box-shadow:0 18px 40px rgba(0,0,0,.25);border:5px solid white;color:var(--navy)}.hero-stage-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:900;letter-spacing:1px}.mini-stars{color:#d3a21f;font-size:20px}.stage-question{font:800 21px/1.2 Georgia,serif;text-align:center;margin:18px 8px}.mini-answers{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mini-answer{height:50px;border-radius:12px;display:grid;place-items:center;color:white;font-size:20px;font-weight:900}.red{background:#e64b5d}.blue{background:#2774de}.yellow{background:#dca51d}.green{background:#269b62}.hero-dove{position:absolute;right:3px;bottom:0;font-size:56px;filter:drop-shadow(0 5px 3px rgba(0,0,0,.16));transform:rotate(-12deg)}
+.home-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:28px}.home-card{padding:25px}.home-card h2{font:800 25px Georgia,serif;margin:3px 0 8px;color:var(--navy)}.field{display:block;font-size:13px;font-weight:850;color:#47516b;margin:12px 0 6px}.input{width:100%;padding:14px 15px;border:1.5px solid #ded8ca;border-radius:12px;background:white;color:var(--ink)}.input:focus{border-color:var(--blue)}.join-row{display:flex;gap:8px}.join-row .input{min-width:0}.feature-row{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}.feature-row:last-child{border:0}.feature-icon{width:38px;height:38px;border-radius:12px;background:#fff3c6;display:grid;place-items:center;font-size:19px;flex:none}.feature-row b{display:block;color:var(--navy)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:20px}.toolbar h1{font:800 34px Georgia,serif;margin:4px 0;color:var(--navy)}.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap}.two-col{display:grid;grid-template-columns:1fr 340px;gap:18px}.content-card{padding:25px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.preview-card{padding:24px;background:linear-gradient(160deg,#162653,#254783);color:white;overflow:hidden;position:relative}.preview-card h3{font:800 24px Georgia,serif;margin:0 0 8px}.preview-card .preview-people{display:flex;gap:0;margin:20px 0 15px}.preview-card .preview-people .avatar{margin-right:-9px;border:3px solid #203b78}.tag{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;background:#f8edc8;color:#76570a;border-radius:999px;font-size:11px;font-weight:900}.tag-dark{background:#293d70;color:#dce7ff}.divider{height:1px;background:var(--line);margin:18px 0}
+.lobby-grid{display:grid;grid-template-columns:360px 1fr;gap:18px}.pin-card{padding:28px;text-align:center;background:linear-gradient(150deg,#101b3f,#1b3974);color:white}.pin-label{font-size:12px;letter-spacing:2px;font-weight:900;color:#d8e2ff}.pin{font-size:clamp(42px,7vw,65px);font-weight:950;letter-spacing:7px;color:var(--gold);line-height:1.1;margin:10px 0}.qr-box{width:116px;height:116px;margin:15px auto;background:white;border:8px solid white;border-radius:9px;display:grid;place-items:center;color:var(--navy);font-size:12px;font-weight:900;background-image:repeating-conic-gradient(#18254b 0% 25%,white 0% 50%);background-size:17px 17px;position:relative}.qr-box span{background:white;padding:8px;border-radius:4px}.participant-card{padding:25px}.participant-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:12px;margin-top:16px}.participant{background:#f8f5ed;border:1px solid #e7dfcf;border-radius:16px;padding:12px 8px;text-align:center;min-height:130px}.participant .avatar{margin:0 auto 5px}.participant b{font-size:13px;display:block;overflow-wrap:anywhere}.participant small{font-size:10px;color:var(--muted)}
+.avatar{width:64px;height:76px;display:block;overflow:visible}.avatar.sm{width:48px;height:58px}.avatar.lg{width:96px;height:112px}.avatar-wrap{display:inline-grid;place-items:center;background:#eaf0ff;border-radius:18px;padding:5px;border:2px solid white;box-shadow:0 3px 8px rgba(16,27,63,.12)}
+.game-shell{background:var(--navy);border-radius:26px;padding:20px;color:white;box-shadow:var(--shadow)}.game-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:17px}.game-brand{font-weight:900;letter-spacing:1px}.q-progress{height:9px;background:#34436b;border-radius:99px;overflow:hidden;margin:0 0 16px}.q-progress span{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}.game-question{background:white;color:var(--navy);border-radius:18px;padding:clamp(20px,4vw,40px);text-align:center;font:800 clamp(23px,3.4vw,38px)/1.15 Georgia,serif;min-height:142px;display:grid;place-items:center;box-shadow:0 5px 0 #d4cfc3;margin-bottom:15px}.answers-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.answer{border:0;border-radius:15px;min-height:90px;padding:14px;color:white;display:flex;gap:12px;align-items:center;text-align:left;font-size:clamp(14px,1.5vw,19px);font-weight:850;box-shadow:0 6px 0 rgba(0,0,0,.23);transition:.15s}.answer:hover{transform:translateY(-2px);filter:brightness(1.06)}.answer:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.25)}.answer .shape{width:36px;height:36px;border-radius:9px;background:rgba(0,0,0,.2);display:grid;place-items:center;font-size:21px;flex:none}.answer:disabled{cursor:default;opacity:.72}.answer.correct{outline:4px solid #a7f2c8;filter:brightness(1.08)}.answer.wrong{opacity:.35}.game-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap}.timer{font-weight:900;color:var(--gold);font-size:21px}.host-layout{display:grid;grid-template-columns:1fr 280px;gap:16px}.host-side{padding:19px;background:#fff;border-radius:18px;color:var(--ink)}.host-side h3{font:800 20px Georgia,serif;color:var(--navy);margin:0 0 12px}.stat-line{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:9px 0;font-size:13px}.stat-line b{color:var(--navy)}.bar{height:9px;background:#ece8df;border-radius:99px;overflow:hidden;margin-top:5px}.bar i{height:100%;display:block;border-radius:99px}.result-correct{padding:12px 15px;background:#e3f8ed;border:1px solid #b3e7c9;border-radius:12px;color:#11633d;font-weight:800;margin-top:12px}.leaderboard{padding:23px}.leader-row{display:flex;align-items:center;gap:12px;padding:11px 9px;border-bottom:1px solid var(--line)}.leader-row:last-child{border:0}.rank-num{width:30px;height:30px;border-radius:9px;background:#f4ecd4;color:#785d18;display:grid;place-items:center;font-weight:950}.leader-row .who{flex:1;font-weight:850}.score{font-weight:950;color:var(--navy)}.podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;margin:28px auto 22px;max-width:650px}.podium-place{width:30%;text-align:center;border-radius:18px 18px 0 0;padding:13px 8px 16px;color:var(--navy);font-weight:900;background:#f4d875;min-height:145px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;box-shadow:inset 0 -8px 0 rgba(0,0,0,.08)}.podium-place.first{min-height:195px;background:linear-gradient(#ffe98c,#e5b932)}.podium-place.third{min-height:120px;background:#d9e0ec}.podium-place strong{font-size:27px}.podium-place small{font-size:11px}.feedback{padding:22px;border-radius:18px;background:#fff;border:1px solid var(--line);text-align:center}.feedback h2{font:800 30px Georgia,serif;color:var(--navy)}
+.student-frame{max-width:690px;margin:0 auto}.student-top{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px;color:var(--navy);font-weight:850}.student-answer{min-height:74px}.student-status{text-align:center;padding:32px 20px}.student-status .big-icon{font-size:60px}.note{background:#fff5d9;border:1px solid #ead9a4;padding:12px 15px;border-radius:12px;color:#6c5411;font-size:13px}.footer-note{text-align:center;color:#8a8f9f;font-size:12px;margin:26px 0 0}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:#101b3f;color:white;padding:12px 18px;border-radius:12px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.25s;z-index:40;font-weight:750}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:820px){.hero{grid-template-columns:1fr}.hero-art{min-height:220px}.home-grid,.two-col,.lobby-grid,.host-layout{grid-template-columns:1fr}.preview-card{min-height:220px}.toolbar{align-items:flex-start;flex-direction:column}.host-side{order:2}}
+@media(max-width:520px){.topbar{height:62px;padding:0 14px}.status{display:none}.wrap{width:min(100% - 22px,1180px);padding-top:16px}.hero{padding:24px 19px;border-radius:22px}.hero h1{font-size:48px}.hero p{font-size:15px}.hero-art{min-height:190px}.hero-stage{max-width:320px}.home-card,.content-card,.participant-card{padding:18px}.form-grid{grid-template-columns:1fr}.answers-grid{gap:9px}.answer{min-height:78px;padding:10px;font-size:14px}.answer .shape{width:29px;height:29px}.game-shell{padding:12px;border-radius:19px}.game-question{min-height:130px;padding:20px 14px}.podium{gap:5px}.podium-place{padding-left:4px;padding-right:4px}.participant-list{grid-template-columns:repeat(2,1fr)}}
+
+/* Criador de avatares bíblicos · flat design 2D */
+.avatar-editor-layout{display:grid;grid-template-columns:330px 1fr;gap:18px;align-items:start}
+.avatar-preview-panel{padding:22px;text-align:center;background:linear-gradient(155deg,#21145f,#3c218c);color:#fff;position:sticky;top:92px;overflow:hidden}
+.avatar-preview-panel:before{content:"";position:absolute;width:260px;height:260px;border:1px solid #ffffff20;border-radius:50%;left:35px;top:45px;box-shadow:0 0 0 24px #ffffff08,0 0 0 50px #ffffff06}
+.avatar-preview-stage{position:relative;z-index:1;width:190px;height:190px;margin:18px auto 12px;border-radius:30px;background:#f4c94b;display:grid;place-items:center;box-shadow:0 8px 0 #a77d1b,0 16px 25px #090e2c55;overflow:hidden}
+.avatar-preview-stage svg.avatar{width:100%;height:100%;max-width:190px}
+.avatar-preview-panel h2{position:relative;z-index:1;font:900 25px Georgia,serif;margin:10px 0 4px}.avatar-preview-panel p{position:relative;z-index:1;color:#e4ddff;font-size:13px;margin:0}
+.avatar-preview-actions{position:relative;z-index:1;display:flex;gap:8px;margin-top:18px}.avatar-preview-actions button{flex:1}
+.avatar-editor-controls{padding:22px}.avatar-editor-controls h2{font:850 24px Georgia,serif;color:var(--navy);margin:0 0 5px}
+.avatar-section{padding:16px 0;border-bottom:1px solid var(--line)}.avatar-section:last-child{border:0}.avatar-section-title{font-size:12px;font-weight:950;letter-spacing:1px;color:#9a7410;margin-bottom:11px;text-transform:uppercase}
+.avatar-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.avatar-field label{display:block;font-size:12px;font-weight:850;color:#4f5a73;margin-bottom:6px}.avatar-field select{width:100%;min-width:0;padding:11px 10px;border:1.5px solid #ded8ca;border-radius:11px;background:#fff;color:var(--ink)}
+.base-character-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.base-character{border:2px solid #ece6d9;background:#faf8f2;border-radius:13px;padding:7px 4px 8px;text-align:center;color:var(--ink);box-shadow:0 2px 0 #e4dece;min-width:0}.base-character.active{border-color:#d1a52b;background:#fff6d7;box-shadow:0 0 0 2px #f5dfa0}.base-character .avatar{width:58px;height:68px;margin:0 auto}.base-character b{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.color-select-wrap{display:flex;gap:7px;flex-wrap:wrap}.color-dot{width:30px;height:30px;border:3px solid white;border-radius:50%;box-shadow:0 0 0 1px #cfc8b7;cursor:pointer}.color-dot.selected{box-shadow:0 0 0 3px #d1a52b}.avatar-helper{padding:12px 14px;background:#fff6d9;border:1px solid #ebd99f;border-radius:12px;font-size:12px;color:#725a19;margin-top:14px}
+@media(max-width:820px){.avatar-editor-layout{grid-template-columns:1fr}.avatar-preview-panel{position:relative;top:auto}.base-character-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:520px){.avatar-editor-controls,.avatar-preview-panel{padding:17px}.avatar-fields{grid-template-columns:1fr 1fr;gap:9px}.base-character-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.avatar-preview-stage{width:170px;height:170px}}
+
+
+@media(max-width:620px){.topbar{height:auto;padding:10px 12px;flex-wrap:wrap;gap:8px}.brand small{display:none}.top-actions{flex-wrap:wrap}}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
+.hint{color:var(--muted);font-size:13px}.good{color:var(--green)}.badc{color:var(--red)}
+.rep{display:grid;grid-template-columns:34px 1fr 46px;gap:8px;align-items:center;margin:8px 0;font-size:15px}.rep .t{height:16px;background:var(--line);border-radius:8px;overflow:hidden}.rep .t i{display:block;height:100%}
+.fb{border-left:4px solid var(--gold);padding-left:12px;margin:10px 0}
+.row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.row .nm{flex:1;font-weight:600}.row.qi{justify-content:space-between;align-items:flex-start}
+.scroll{overflow-x:auto}table{border-collapse:collapse;font-size:14px;min-width:100%}th,td{padding:6px 8px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}td:first-child,th:first-child{text-align:left}
+.c{display:inline-block;width:26px;height:26px;line-height:26px;border-radius:7px;color:#fff;font-weight:700;font-size:13px}
+.card select,.card input{width:100%;padding:11px;border-radius:10px;border:1px solid var(--line);margin:4px 0 10px;background:#fff;color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 18px;border-radius:12px;z-index:50;opacity:0;pointer-events:none;transition:opacity .2s}.toast.show{opacity:1}
+</style></head><body>
+<header class="topbar">
+ <div class="brand"><div class="brand-mark">✦</div><div>SELAH QUIZ<small>EBIPEP · PARE, PENSE E APRENDA</small></div></div>
+ <div class="top-actions"><button class="btn btn-blue btn-sm" id="navT" style="display:none" onclick="go('lessons')">Lições</button><button class="btn btn-blue btn-sm" id="navR" style="display:none" onclick="go('reports')">Relatórios</button><button class="btn btn-ghost btn-sm" id="navX" style="display:none;color:#fff;border-color:#41558a" onclick="logout()">Sair</button><button class="btn btn-gold btn-sm" onclick="go('avatar')">Meu avatar</button><button class="btn btn-light btn-sm" onclick="go('home')">Início</button></div>
+</header>
+<main class="wrap">
+<section id="home" class="screen active">
+ <div class="hero">
+  <div><div class="eyebrow" style="color:#f2c94c">UM NOVO JEITO DE APRENDER A BÍBLIA</div><h1>Conheça.<br><span>Responda.</span><br>Aprenda.</h1><p>Uma experiência de quiz bíblico em ritmo de jogo: participe, desafie seus conhecimentos e descubra mais sobre as Escrituras.</p>
+   <div class="hero-actions"><button class="btn btn-gold" onclick="go('setup')">＋ Criar partida</button><button class="btn btn-light" onclick="go('join')">Entrar com PIN</button><button class="btn btn-light" onclick="go('avatar')">✦ Criar personagem</button></div>
+  </div>
+  <div class="hero-art"><div class="hero-stage"><div class="hero-stage-top"><span>✦ SELAH QUIZ</span><span class="mini-stars">★ ★ ★</span></div><div class="stage-question">Quem batizou Jesus?</div><div class="mini-answers"><div class="mini-answer red">▲</div><div class="mini-answer blue">◆</div><div class="mini-answer yellow">●</div><div class="mini-answer green">■</div></div></div><div class="hero-dove">🕊️</div></div>
+ </div>
+ <div class="home-grid">
+  <div class="panel home-card"><div class="eyebrow">COMECE AGORA</div><h2>Como deseja participar?</h2><p class="muted">Escolha seu caminho para experimentar o Selah Quiz.</p>
+   <div class="feature-row"><div class="feature-icon">🎓</div><div><b>Sou professor</b><span class="small muted">Prepare uma lição e conduza uma partida na tela principal.</span><div style="margin-top:9px"><button class="btn btn-blue btn-sm" onclick="go('setup')">Criar uma sala</button></div></div></div>
+   <div class="feature-row"><div class="feature-icon">📱</div><div><b>Sou aluno</b><span class="small muted">Entre em uma partida usando o PIN disponibilizado pelo professor.</span><div style="margin-top:9px"><button class="btn btn-light btn-sm" onclick="go('join')">Inserir PIN</button></div></div></div>
+  </div>
+  <div class="panel home-card"><div class="eyebrow">FEITO PARA A EBIPEP</div><h2>Aprender também pode ser divertido.</h2><div class="feature-row"><div class="feature-icon">📖</div><div><b>Conteúdo bíblico</b><span class="small muted">Lições, perguntas e referências das Escrituras.</span></div></div><div class="feature-row"><div class="feature-icon">🏆</div><div><b>Competição saudável</b><span class="small muted">Pontuação, combos, classificação e pódio.</span></div></div><div class="feature-row"><div class="feature-icon">🧑‍🤝‍🧑</div><div><b>Aprendizagem coletiva</b><span class="small muted">Identifique os temas que precisam ser reforçados.</span></div></div></div>
+ </div>
+ 
+</section>
+
+<section id="setup" class="screen">
+ <div class="toolbar"><div><div class="eyebrow">PAINEL DO PROFESSOR</div><h1>Preparar partida</h1><div class="muted">Configure a rodada antes de abrir a sala.</div></div><button class="btn btn-light" onclick="go('home')">← Voltar</button></div>
+ <div class="two-col"><div class="panel content-card">
+  <label class="field" for="lesson">LIÇÃO</label><select id="lesson" class="input"><option value="batismo">Lição 5 · O batismo de Jesus</option></select>
+  <div class="form-grid"><div><label class="field" for="timeLimit">TEMPO POR PERGUNTA</label><select class="input" id="timeLimit"><option value="10">10 segundos</option><option value="20">20 segundos</option><option value="25" selected>25 segundos</option><option value="30">30 segundos</option><option value="60">60 segundos</option></select></div><div><label class="field" for="questionCount">QUANTIDADE</label><select class="input" id="questionCount" onchange="$('previewQCount').textContent=this.value"><option value="5">5 perguntas</option><option value="10" selected>10 perguntas</option></select></div></div>
+  <label class="field" for="hostName">NOME DO PROFESSOR</label><input class="input" id="hostName" value="Professor" maxlength="24">
+  <div class="divider"></div>
+  <button class="btn btn-gold btn-block" style="margin-top:23px" onclick="createRoom()">Criar sala e gerar PIN →</button>
+ </div>
+ <aside class="panel preview-card"><span class="tag">LIÇÃO SELECIONADA</span><h3 id="pvTitle">Lição</h3><p style="color:#dce7ff;margin-top:0">Uma revisão sobre Mateus 3:13–17 e o início do ministério público de Jesus.</p><div class="preview-people" id="previewPeople"></div><b><span id="previewQCount">10</span> perguntas</b><div class="small" style="color:#dce7ff">4 alternativas · pontuação por velocidade · explicação após a resposta</div><div style="position:absolute;right:18px;bottom:12px;font-size:62px;opacity:.18">📜</div></aside></div>
+</section>
+
+<section id="avatar" class="screen">
+ <div class="toolbar"><div><div class="eyebrow">SEU PERSONAGEM</div><h1>Crie seu avatar bíblico</h1><div class="muted">Escolha uma inspiração bíblica e personalize os detalhes. Todas as peças seguem o mesmo estilo cartoon vetorial 2D.</div></div><button class="btn btn-light" onclick="go('home')">← Voltar</button></div>
+ <div class="avatar-editor-layout">
+  <aside class="panel avatar-preview-panel">
+   <span class="tag">PRÉVIA DO PERSONAGEM</span>
+   <div class="avatar-preview-stage" id="avatarPreview"></div>
+   <h2 id="avatarPreviewName">Davi</h2><p id="avatarPreviewRole">Pastor · Personagem inspirado na Bíblia</p>
+   <div class="avatar-preview-actions"><button class="btn btn-light btn-sm" onclick="randomizeAvatar()">⤨ Sortear</button><button class="btn btn-gold btn-sm" onclick="saveMyAvatar()">Salvar avatar</button></div>
+  </aside>
+  <div class="panel avatar-editor-controls">
+   <h2>Personalize cada detalhe</h2><p class="muted small">A escolha do personagem define uma aparência inicial. Depois, você pode misturar as opções e criar combinações próprias.</p>
+   <div class="avatar-section"><div class="avatar-section-title">1 · Escolha uma inspiração bíblica</div><div class="base-character-grid" id="baseCharacterGrid"></div></div>
+   <div class="avatar-section"><div class="avatar-section-title">2 · Aparência</div><div class="avatar-fields">
+    <div class="avatar-field"><label for="avGender">Apresentação</label><select id="avGender" onchange="updateAvatarField('gender',this.value)"><option value="male">Masculina</option><option value="female">Feminina</option></select></div>
+    <div class="avatar-field"><label for="avAge">Idade</label><select id="avAge" onchange="updateAvatarField('age',this.value)"><option value="child">Criança</option><option value="young">Jovem</option><option value="adult">Adulto</option><option value="elder">Idoso</option></select></div>
+    <div class="avatar-field"><label for="avSkin">Tom de pele</label><select id="avSkin" onchange="updateAvatarField('skin',this.value)"></select></div>
+    <div class="avatar-field"><label for="avEyes">Formato dos olhos</label><select id="avEyes" onchange="updateAvatarField('eyeStyle',this.value)"><option value="round">Grandes e redondos</option><option value="soft">Suaves</option><option value="almond">Amendoados</option></select></div>
+    <div class="avatar-field"><label for="avEyeColor">Cor dos olhos</label><select id="avEyeColor" onchange="updateAvatarField('eyeColor',this.value)"></select></div>
+   </div></div>
+   <div class="avatar-section"><div class="avatar-section-title">3 · Cabelo e barba</div><div class="avatar-fields">
+    <div class="avatar-field"><label for="avHairStyle">Estilo do cabelo</label><select id="avHairStyle" onchange="updateAvatarField('hairStyle',this.value)"><option value="short">Curto</option><option value="curly">Cacheado</option><option value="long">Comprido</option><option value="braid">Trançado</option><option value="bun">Coque</option><option value="bald">Careca</option></select></div>
+    <div class="avatar-field"><label for="avHairColor">Cor do cabelo</label><select id="avHairColor" onchange="updateAvatarField('hair',this.value)"></select></div>
+    <div class="avatar-field"><label for="avBeard">Barba / bigode</label><select id="avBeard" onchange="updateAvatarField('beard',this.value)"><option value="none">Sem barba</option><option value="stubble">Barba por fazer</option><option value="short">Barba curta</option><option value="full">Barba cheia</option><option value="mustache">Somente bigode</option></select></div>
+    <div class="avatar-field"><label for="avBeardColor">Cor da barba</label><select id="avBeardColor" onchange="updateAvatarField('beardColor',this.value)"></select></div>
+   </div></div>
+   <div class="avatar-section"><div class="avatar-section-title">4 · Vestimentas e acessórios</div><div class="avatar-fields">
+    <div class="avatar-field"><label for="avRobe">Cor da túnica</label><select id="avRobe" onchange="updateAvatarField('robe',this.value)"></select></div>
+    <div class="avatar-field"><label for="avMantle">Cor do manto</label><select id="avMantle" onchange="updateAvatarField('mantle',this.value)"></select></div>
+    <div class="avatar-field"><label for="avHeadwear">Adereço de cabeça</label><select id="avHeadwear" onchange="updateAvatarField('headwear',this.value)"><option value="none">Nenhum</option><option value="band">Faixa</option><option value="veil">Tecido / véu</option><option value="crown">Coroa</option><option value="priest">Adereço sacerdotal</option></select></div>
+    <div class="avatar-field"><label for="avProp">Utensílio</label><select id="avProp" onchange="updateAvatarField('propId',this.value)"><option value="none">Nenhum</option><option value="staff">Cajado</option><option value="scroll">Pergaminho</option><option value="sling">Funda</option><option value="harp">Harpa</option><option value="jar">Cântaro</option><option value="basket">Cesta</option><option value="tablet">Tábuas</option><option value="book">Rolo de Escritura</option></select></div>
+   </div><div class="avatar-helper">As combinações são livres: idade, cabelo, barba, olhos, roupas e utensílios podem ser alterados sem mudar o estilo visual do avatar. Alguns acessórios são inspirados em personagens e objetos mencionados nas Escrituras.</div></div>
+   <div style="display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap;padding-top:17px"><button class="btn btn-light" onclick="resetAvatar()">Restaurar personagem</button><button class="btn btn-gold" onclick="saveMyAvatar()">Salvar meu personagem ✓</button></div>
+  </div>
+ </div>
+</section>
+
+<section id="join" class="screen">
+ <div class="toolbar"><div><div class="eyebrow">ENTRAR NA PARTIDA</div><h1>Vamos jogar?</h1><div class="muted">Digite o PIN mostrado pelo professor.</div></div><button class="btn btn-light" onclick="go('home')">← Voltar</button></div>
+ <div class="panel content-card" style="max-width:520px;margin:30px auto;text-align:center"><div style="font-size:48px">🕊️</div><h2 class="section-title">Entre na sala</h2><label class="field" for="joinPin" style="text-align:left">CÓDIGO PIN</label><input id="joinPin" class="input" inputmode="numeric" maxlength="6" placeholder="Ex.: 482 193" style="font-size:26px;text-align:center;font-weight:950;letter-spacing:5px"><label class="field" for="nick" style="text-align:left">SEU APELIDO</label><input id="nick" class="input" maxlength="14" placeholder="Como deseja aparecer?" style="text-align:center"><div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:12px 0"><span class="avatar-wrap" id="joinAvatarMini"></span><button class="btn btn-light btn-sm" onclick="go('avatar')">Personalizar avatar</button></div><button class="btn btn-gold btn-block" style="margin-top:16px" onclick="joinRoom()">Entrar no jogo →</button></div>
+</section>
+
+<section id="lobby" class="screen">
+ <div class="toolbar"><div><div class="eyebrow">SALA DE ESPERA · PROFESSOR</div><h1>Todos a bordo?</h1><div class="muted">Compartilhe o PIN e aguarde os participantes.</div></div><button class="btn btn-light" onclick="go('home')">Sair da sala</button></div>
+ <div class="lobby-grid"><div class="panel pin-card"><div class="pin-label">PIN DA PARTIDA</div><div class="pin" id="roomPin">482193</div><div style="font-weight:800"><span id="siteUrl"></span></div><button class="btn btn-gold btn-block" onclick="copyPin()">Copiar PIN</button></div>
+ <div class="panel participant-card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><div><div class="eyebrow">PARTICIPANTES</div><h2 class="section-title" style="margin-bottom:0"><span id="playerCount">6</span> conectados</h2></div><span class="tag">AGUARDANDO</span></div><div id="participants" class="participant-list"></div><button class="btn btn-gold btn-block" style="margin-top:18px" onclick="startGame()">Iniciar partida →</button></div></div>
+</section>
+
+<section id="hostgame" class="screen">
+ <div class="toolbar"><div><div class="eyebrow">PARTIDA AO VIVO · VISÃO DO PROFESSOR</div><h1 id="hostTitle">Partida</h1><div class="muted">Pergunta <b id="qIndex">1</b> de <b id="qTotal">10</b></div></div><div class="toolbar-actions"><button class="btn btn-light btn-sm" onclick="go('home')">Encerrar</button></div></div>
+ <div class="host-layout"><div class="game-shell"><div class="game-top"><div class="game-brand">✦ SELAH QUIZ</div><div class="timer" id="hostTimer">⏱ 25s</div></div><div class="q-progress"><span id="progress"></span></div><div class="game-question" id="hostQuestion">Quem batizou Jesus?</div><div class="answers-grid" id="hostAnswers"></div><div class="game-bottom"><span class="small" style="color:#dce5ff">Respostas recebidas: <b id="answeredCount">0</b>/<b id="totalCount">6</b></span><button class="btn btn-gold" id="revealBtn" onclick="revealAnswer()">Revelar resultado →</button></div></div>
+ <aside class="host-side"><h3>Visão da turma</h3><div class="stat-line"><span>Participantes</span><b id="sidePlayers">6</b></div><div class="stat-line"><span>Responderam</span><b id="sideAnswered">0</b></div><div class="stat-line"><span>Questão</span><b id="sideQuestion">1/10</b></div><div id="hostResultSide"><p class="small muted" style="margin-top:15px">A distribuição das respostas aparecerá aqui após revelar o resultado.</p></div></aside></div>
+</section>
+
+<section id="student" class="screen">
+ <div class="student-frame"><div class="student-top"><span>✦ SELAH QUIZ</span><span class="tag tag-dark"><span id="stuName"></span></span></div><div class="game-shell"><div class="game-top"><div class="small" style="color:#dce5ff" id="studentTitle"></div><div class="timer" id="studentTimer">⏱ 25s</div></div><div class="q-progress"><span id="studentProgress" style="width:40%"></span></div><div class="game-question" id="studentQuestion">Quem batizou Jesus?</div><div class="answers-grid" id="studentAnswers"></div><div id="studentFeedback"></div><div class="game-bottom"><span class="small" style="color:#dce5ff">Responda antes do tempo acabar!</span></div></div></div>
+</section>
+
+<section id="reveal" class="screen">
+ <div class="toolbar"><div><div class="eyebrow">RESULTADO DA PERGUNTA</div><h1>Vamos conferir!</h1><div class="muted">Veja como a turma respondeu.</div></div><button class="btn btn-light" onclick="go('home')">Encerrar</button></div>
+ <div class="panel content-card" style="max-width:900px;margin:auto"><div class="feedback"><div style="font-size:46px">🎯</div><h2 id="revealTitle">Resposta correta!</h2><p class="muted" id="revealQuestion"></p><div class="result-correct" id="correctAnswer"></div><p id="explanation" style="max-width:680px;margin:17px auto 0"></p></div><div class="divider"></div><h3 style="font:800 22px Georgia,serif;color:var(--navy)">Distribuição das respostas</h3><div id="distribution"></div><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px;flex-wrap:wrap"><span class="small muted">A explicação bíblica ajuda a transformar o jogo em aprendizagem.</span><button class="btn btn-gold" onclick="advanceAfterReveal()" id="nextBtn">Próxima pergunta →</button></div></div>
+</section>
+
+<section id="leaderboard" class="screen">
+ <div class="toolbar"><div><div class="eyebrow">PLACAR DA PARTIDA</div><h1>Quem está na frente?</h1><div class="muted">Classificação parcial dos participantes.</div></div><button class="btn btn-light" onclick="go('home')">Encerrar</button></div>
+ <div class="panel leaderboard" style="max-width:760px;margin:auto"><h2 class="section-title" style="text-align:center">🏆 Classificação</h2><div id="leaderRows"></div><div style="text-align:center;margin-top:18px"><button class="btn btn-gold" onclick="continueFromBoard()">Continuar partida →</button></div></div>
+</section>
+
+<section id="podium" class="screen">
+ <div class="panel content-card" style="max-width:850px;margin:30px auto;text-align:center;background:linear-gradient(160deg,#101b3f,#203e7a);color:white;border:0"><div class="eyebrow" style="color:#f2c94c">FIM DE JOGO</div><h1 style="font:900 clamp(36px,6vw,58px) Georgia,serif;margin:10px 0">Que partida!</h1><p style="color:#dce5ff">Parabéns a todos que participaram e aprenderam.</p><div class="podium" id="finalPodium"></div><div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:18px;border-radius:16px;max-width:500px;margin:22px auto"><b>Aprender é a maior conquista.</b><div class="small" style="color:#dce5ff;margin-top:4px">Continue estudando e crescendo no conhecimento das Escrituras.</div></div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn btn-gold" onclick="showSummary()">Ver resumo da aula</button><button class="btn btn-light" onclick="go('home')">Voltar ao início</button></div></div>
+</section>
+
+
+<section id="login" class="screen"><div class="panel content-card" style="max-width:520px;margin:30px auto"><div class="eyebrow">PAINEL DO PROFESSOR</div><h2 class="section-title">Entrar como professor</h2><label class="field" for="lgEmail">E-MAIL</label><input class="input" id="lgEmail" type="email"><label class="field" for="lgPw">SENHA</label><input class="input" id="lgPw" type="password"><button class="btn btn-gold btn-block" style="margin-top:16px" onclick="login()">Entrar →</button><p id="lgErr" class="small muted"></p><button class="btn btn-light btn-sm" onclick="go('home')">← Voltar</button></div></section>
+<section id="lessons" class="screen"><div class="toolbar"><div><div class="eyebrow">PAINEL DO PROFESSOR</div><h1>Lições</h1><div class="muted">Crie as perguntas de cada aula.</div></div><button class="btn btn-light" onclick="go('home')">← Voltar</button></div><div id="lessonsBox"></div></section>
+<section id="reports" class="screen"><div class="toolbar"><div><div class="eyebrow">ACOMPANHAMENTO</div><h1>Relatórios</h1><div class="muted">Desempenho por aula e evolução dos alunos.</div></div><button class="btn btn-light" onclick="go('home')">← Voltar</button></div><div id="reportsBox"></div></section>
+</main>
+<div id="toast" class="toast"></div>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,signInAnonymously,signInWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,doc,setDoc,getDoc,addDoc,updateDoc,deleteDoc,collection,onSnapshot,query,orderBy} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyBXd5pv0JGHIck6EehSWUbKJGvOozIK6uM",authDomain:"selah-quiz-b3e34.firebaseapp.com",projectId:"selah-quiz-b3e34",storageBucket:"selah-quiz-b3e34.firebasestorage.app",messagingSenderId:"942013620402",appId:"1:942013620402:web:330d9af4ac9e4e7a63e9ab"});
+const auth=getAuth(app),db=getFirestore(app);
+const TEACHER="jmpedroso170@gmail.com",L="ABCD",SH=['▲','◆','●','■'],CL=['red','blue','yellow','green'];
+const QUESTIONS=[
+ {q:"Quem batizou Jesus?",o:["João, o apóstolo","João Batista","João Marcos","Tiago, irmão de João"],a:1,ref:"Mateus 3:13–15",why:"João Batista estava batizando no rio Jordão. Jesus foi até ele para ser batizado e cumprir toda a justiça."},
+ {q:"Em qual rio Jesus foi batizado?",o:["Rio Galileia","Rio Jordão","Rio Mar Morto","Rio Nilo"],a:1,ref:"Mateus 3:13",why:"Mateus registra que Jesus foi da Galileia ao Jordão para encontrar João e ser batizado."},
+ {q:"Por que João tentou impedir Jesus de ser batizado?",o:["Porque Jesus tinha pecados e precisava se arrepender","Porque Jesus era santo e não tinha pecado","Porque João também queria ser batizado primeiro","Porque Jesus ainda não tinha discípulos"],a:1,ref:"Mateus 3:14–15; Hebreus 4:15",why:"João reconheceu que Jesus era superior a ele. Hebreus 4:15 afirma que Jesus foi tentado, mas sem pecado."},
+ {q:"Jesus disse que era necessário cumprir toda a…",o:["Lei","Profecia","Justiça","Promessa"],a:2,ref:"Mateus 3:15",why:"Jesus respondeu a João: 'Deixa por agora, porque assim nos convém cumprir toda a justiça'."},
+ {q:"A leitura da lição foi Mateus 3:13-15. Em qual livro está?",o:["Marcos 3","Lucas 3","João 3","Mateus"],a:3,ref:"Mateus 3:13–15",why:"A leitura indicada está no Evangelho segundo Mateus, capítulo 3, versículos 13 a 15."},
+ {q:"Quando Jesus saiu das águas, o que desceu sobre Ele?",o:["Uma pomba comum","O Espírito de Deus em forma de pomba","Um anjo em forma de pomba","Uma chama de fogo"],a:1,ref:"Mateus 3:16",why:"Mateus descreve o Espírito de Deus descendo como pomba e vindo sobre Jesus."},
+ {q:"Quem falou do céu: 'Este é o meu Filho amado'?",o:["O Espírito Santo","O anjo Gabriel","João Batista","O Pai"],a:3,ref:"Mateus 3:17",why:"A voz dos céus declara que Jesus é o Filho amado, em quem o Pai se compraz."},
+ {q:"Qual destas coisas Jesus começou a fazer só DEPOIS do batismo?",o:["Nascer em Belém","Ensinar, curar, libertar e anunciar o Reino","Trabalhar como carpinteiro","Ser levado ao templo quando bebê"],a:1,ref:"Mateus 4:17, 23; Lucas 4:18",why:"Após o batismo e a tentação no deserto, os Evangelhos apresentam Jesus anunciando o Reino, ensinando e realizando seu ministério público."},
+ {q:"Jesus foi batizado porque precisava confessar pecados?",o:["Sim, como sinal de arrependimento","Sim, porque João exigiu","Não; o texto apresenta o batismo ligado ao cumprimento da justiça","Não; Jesus recusou o batismo"],a:2,ref:"Mateus 3:14–15; Hebreus 4:15",why:"O texto não apresenta Jesus confessando pecados. Ele explica o batismo como cumprimento da justiça; Hebreus afirma que Jesus não pecou."},
+ {q:"Segundo a lição, o batismo NÃO é apenas um ritual. Então o que ele é?",o:["Uma tradição da igreja","Um passo de obediência que mostra publicamente a decisão de seguir a Cristo","Uma festa de comemoração","Uma obrigação só para adultos"],a:1,ref:"Mateus 3:15; Romanos 6:3–4",why:"A lição apresenta o batismo como um passo de obediência que expressa publicamente a decisão de seguir a Cristo. Romanos 6:3–4 relaciona o batismo à união com Cristo."}
+];
+
+const CHARACTERS=[
+ {name:"Davi",type:"Pastor",gender:"male",skin:"#b9784f",hair:"#38251d",robe:"#b87937",mantle:"#5f7945",hairStyle:"curly",eyeColor:"#342019",eyeStyle:"round",beard:"none",age:"young",headwear:"none",propId:"sling"},
+ {name:"Ester",type:"Rainha",gender:"female",skin:"#d89b6b",hair:"#332019",robe:"#7a3c79",mantle:"#e7bf51",hairStyle:"long",eyeColor:"#342019",eyeStyle:"round",beard:"none",age:"young",headwear:"crown",propId:"none"},
+ {name:"Moisés",type:"Patriarca",gender:"male",skin:"#a96943",hair:"#a9a39a",robe:"#526b83",mantle:"#a58a62",hairStyle:"long",eyeColor:"#342019",eyeStyle:"soft",beard:"full",beardColor:"#a9a39a",age:"elder",headwear:"none",propId:"staff"},
+ {name:"Débora",type:"Juíza",gender:"female",skin:"#c98d61",hair:"#40261d",robe:"#a84f42",mantle:"#d6b578",hairStyle:"braid",eyeColor:"#342019",eyeStyle:"round",beard:"none",age:"adult",headwear:"veil",propId:"scroll"},
+ {name:"Pedro",type:"Apóstolo",gender:"male",skin:"#bc805c",hair:"#39291f",robe:"#35708b",mantle:"#b58d54",hairStyle:"curly",eyeColor:"#342019",eyeStyle:"round",beard:"short",age:"adult",headwear:"none",propId:"none"},
+ {name:"Maria",type:"Discípula",gender:"female",skin:"#d2a078",hair:"#3a271e",robe:"#e7d9bd",mantle:"#5976a4",hairStyle:"long",eyeColor:"#342019",eyeStyle:"soft",beard:"none",age:"adult",headwear:"veil",propId:"jar"},
+ {name:"Paulo",type:"Apóstolo",gender:"male",skin:"#b77a54",hair:"#554132",robe:"#80614b",mantle:"#d0b47c",hairStyle:"short",eyeColor:"#342019",eyeStyle:"almond",beard:"full",age:"adult",headwear:"none",propId:"scroll"},
+ {name:"Rute",type:"Trabalhadora",gender:"female",skin:"#c88b64",hair:"#42271d",robe:"#63804e",mantle:"#d5b779",hairStyle:"braid",eyeColor:"#342019",eyeStyle:"round",beard:"none",age:"young",headwear:"veil",propId:"basket"},
+ {name:"Daniel",type:"Jovem hebreu",gender:"male",skin:"#bc825b",hair:"#38271c",robe:"#526d9a",mantle:"#b9a071",hairStyle:"short",eyeColor:"#342019",eyeStyle:"round",beard:"none",age:"young",headwear:"band",propId:"book"},
+ {name:"Arão",type:"Sacerdote",gender:"male",skin:"#ad7653",hair:"#443128",robe:"#eee2c5",mantle:"#416b85",hairStyle:"long",eyeColor:"#342019",eyeStyle:"soft",beard:"full",age:"elder",headwear:"priest",propId:"tablet"},
+ {name:"Elias",type:"Profeta",gender:"male",skin:"#a96f4d",hair:"#38271e",robe:"#6c5842",mantle:"#9c865e",hairStyle:"long",eyeColor:"#342019",eyeStyle:"almond",beard:"full",age:"adult",headwear:"none",propId:"staff"},
+ {name:"Priscila",type:"Discípula",gender:"female",skin:"#bd825f",hair:"#422b21",robe:"#7a5c91",mantle:"#d7b879",hairStyle:"bun",eyeColor:"#342019",eyeStyle:"round",beard:"none",age:"adult",headwear:"band",propId:"book"}
+];
+const PALETTES={
+ skin:[['Porcelana','#f3d5bd'],['Claro','#e7b991'],['Médio claro','#d99b70'],['Médio','#bd8059'],['Escuro','#945b3d'],['Muito escuro','#68412f']],
+ hair:[['Preto','#241b19'],['Castanho escuro','#38251d'],['Castanho','#70452f'],['Castanho claro','#a56c42'],['Ruivo','#a94e2d'],['Grisalho','#aaa49b'],['Branco','#e7e2d7']],
+ eyes:[['Castanho','#5b321f'],['Mel','#a66b2c'],['Verde','#477b56'],['Azul','#477fae'],['Cinza','#78818d']],
+ cloth:[['Areia','#d8c49a'],['Cru','#eee2c5'],['Ocre','#b87937'],['Vinho','#8f3c53'],['Azul','#416a91'],['Verde oliva','#657d4b'],['Terracota','#a84f42'],['Roxo','#76528e'],['Marrom','#71513b']]
+};
+const HAIR_STYLES=['short','curly','long','braid','bun','bald'];
+const PROP_LABELS={none:'Sem utensílio',staff:'Cajado',scroll:'Pergaminho',sling:'Funda',harp:'Harpa',jar:'Cântaro',basket:'Cesta',tablet:'Tábuas',book:'Rolo de Escritura'};
+let myAvatar=loadMyAvatar();
+const $=id=>document.getElementById(id);
+function loadMyAvatar(){try{const saved=JSON.parse(localStorage.getItem('selah.avatar.v1'));if(saved&&Number.isInteger(saved.baseIndex)){return {...CHARACTERS[saved.baseIndex%CHARACTERS.length],...saved};}}catch(e){}return {...CHARACTERS[0],baseIndex:0};}
+function saveAvatarLocal(){try{localStorage.setItem('selah.avatar.v1',JSON.stringify(myAvatar));}catch(e){}}
+function avatarSVG(index,size="",custom=null) {
+ const base=CHARACTERS[index%CHARACTERS.length];const c={...base,...(custom||{})};
+ const skin=c.skin||base.skin,hair=c.hair||base.hair,robe=c.robe||base.robe,mantle=c.mantle||base.mantle;
+ const age=c.age||'adult',gender=c.gender||base.gender||'male',eyeColor=c.eyeColor||'#342019',eyeStyle=c.eyeStyle||'round';
+ const headRx=age==='child'?28:30,headRy=age==='child'?33:36,headY=age==='child'?48:49;
+ let hairBack='';
+ if(c.hairStyle==='long')hairBack='<path d="M29 39 Q22 9 60 9 Q98 9 91 42 L91 89 Q82 103 76 83 L76 49 Q60 29 43 48 L43 88 Q34 104 27 86Z"/>';
+ else if(c.hairStyle==='braid')hairBack='<path d="M29 39 Q23 10 60 10 Q97 10 91 40 L83 78 Q77 91 72 79 L74 47 Q60 26 43 47 L39 79 Q32 92 27 78Z"/><path d="M28 60 Q16 72 25 86 Q30 92 34 84 M84 60 Q96 72 87 86 Q82 92 78 84" fill="none" stroke="'+hair+'" stroke-width="8" stroke-linecap="round"/>';
+ else if(c.hairStyle==='bun')hairBack='<circle cx="60" cy="13" r="12"/><path d="M29 39 Q24 10 60 10 Q96 10 91 40 L82 66 Q74 48 74 43 Q60 26 45 43 Q39 54 29 66Z"/>';
+ else if(c.hairStyle==='bald')hairBack='';
+ else if(c.hairStyle==='curly')hairBack='<path d="M29 43 Q20 10 60 10 Q100 10 91 43 Q82 35 77 42 Q69 28 60 35 Q50 24 42 39 Q34 34 29 43Z"/><g>'+[0,1,2,3,4,5,6,7].map((n)=>`<circle cx="${35+n*7}" cy="${25+(n%2)*-5}" r="8"/>`).join('')+'</g>';
+ else hairBack='<path d="M30 42 Q25 10 60 11 Q95 10 90 42 Q76 30 60 29 Q44 29 30 42Z"/>';
+ let eyes='';
+ if(eyeStyle==='almond')eyes=`<path d="M40 49 Q49 39 57 49 Q49 58 40 49Z" fill="#fff"/><path d="M64 49 Q73 39 81 49 Q73 58 64 49Z" fill="#fff"/><circle cx="49" cy="49" r="3.8" fill="${eyeColor}"/><circle cx="73" cy="49" r="3.8" fill="${eyeColor}"/>`;
+ else if(eyeStyle==='soft')eyes=`<ellipse cx="49" cy="49" rx="7" ry="8" fill="#fff"/><ellipse cx="73" cy="49" rx="7" ry="8" fill="#fff"/><circle cx="50" cy="50" r="3.7" fill="${eyeColor}"/><circle cx="74" cy="50" r="3.7" fill="${eyeColor}"/>`;
+ else eyes=`<circle cx="49" cy="49" r="8" fill="#fff"/><circle cx="73" cy="49" r="8" fill="#fff"/><circle cx="50" cy="50" r="4.2" fill="${eyeColor}"/><circle cx="74" cy="50" r="4.2" fill="${eyeColor}"/>`;
+ let beard='';
+ if(c.beard==='stubble')beard='<path d="M42 65 Q60 73 78 65 L74 77 Q60 84 46 77Z" fill="'+(c.beardColor||hair)+'" opacity=".52"/>';
+ if(c.beard==='short')beard='<path d="M42 63 Q60 72 78 63 Q77 83 60 84 Q43 83 42 63Z" fill="'+(c.beardColor||hair)+'"/><path d="M48 69 Q60 75 72 69" fill="none" stroke="'+skin+'" stroke-width="2"/>';
+ if(c.beard==='full')beard='<path d="M38 60 Q60 69 82 60 Q81 88 60 91 Q39 88 38 60Z" fill="'+(c.beardColor||hair)+'"/><path d="M48 72 Q60 78 72 72" fill="none" stroke="'+skin+'" stroke-width="2"/>';
+ if(c.beard==='mustache')beard='<path d="M48 59 Q41 54 37 61 Q43 68 51 63 Q60 59 69 63 Q77 68 83 61 Q78 54 70 59 Q60 64 48 59Z" fill="'+(c.beardColor||hair)+'"/>';
+ const ageMarks=age==='elder'?'<path d="M36 59l6 2 M78 59l6-2 M43 78q5 3 9 0 M68 78q5 3 9 0" stroke="#855f4a" stroke-width="1.5" fill="none" opacity=".6"/>':'';
+ let headwear='';
+ if(c.headwear==='band')headwear='<path d="M29 33 Q60 22 91 33 L89 40 Q60 30 31 40Z" fill="#d6b56d" stroke="#8b6a2b" stroke-width="2"/>';
+ if(c.headwear==='veil')headwear='<path d="M31 33 Q25 18 30 13 Q38 18 39 37 L36 96 Q29 102 26 93 L25 48Z" fill="#e8ddc8" stroke="#b8a98d" stroke-width="2"/><path d="M89 33 Q95 18 90 13 Q82 18 81 37 L84 96 Q91 102 94 93 L95 48Z" fill="#e8ddc8" stroke="#b8a98d" stroke-width="2"/><path d="M31 31 Q60 17 89 31" fill="none" stroke="#b8a98d" stroke-width="5"/>';
+ if(c.headwear==='crown')headwear='<path d="M35 30 L37 12 L49 23 L60 8 L71 23 L83 12 L85 31Z" fill="#f3c94b" stroke="#a87912" stroke-width="2.5"/><path d="M37 31H83V37H37Z" fill="#dca52a"/>';
+ if(c.headwear==='priest')headwear='<path d="M34 28 Q60 13 86 28 L82 39 Q60 31 38 39Z" fill="#f2e8d1" stroke="#aa9368" stroke-width="2"/><path d="M60 15v17" stroke="#bf9a38" stroke-width="3"/>';
+ let prop='';
+ if(c.propId==='staff')prop='<path d="M99 111V35 Q99 24 108 27" fill="none" stroke="#87582e" stroke-width="6" stroke-linecap="round"/>';
+ if(c.propId==='scroll'||c.propId==='book')prop='<rect x="83" y="79" width="27" height="30" rx="5" fill="#f6e8c5" stroke="#9b7a42" stroke-width="2"/><path d="M89 87h15 M89 94h15 M89 101h10" stroke="#9b7a42" stroke-width="2"/>';
+ if(c.propId==='sling')prop='<path d="M88 79 Q104 89 91 104 M90 80 Q76 90 91 104" fill="none" stroke="#6f5132" stroke-width="4" stroke-linecap="round"/><circle cx="90" cy="105" r="4" fill="#8b8e99"/>';
+ if(c.propId==='harp')prop='<path d="M83 109V79 Q97 68 108 91 V109Z" fill="#e0bd64" stroke="#94752f" stroke-width="2"/><path d="M88 105V82 M94 105V78 M100 105V82" stroke="#fff0bc" stroke-width="1.6"/>';
+ if(c.propId==='jar')prop='<path d="M88 85 Q82 91 85 108 H108 Q111 91 103 85Z" fill="#bd7847" stroke="#814b2b" stroke-width="2"/><rect x="91" y="79" width="9" height="8" rx="2" fill="#bd7847" stroke="#814b2b" stroke-width="2"/>';
+ if(c.propId==='basket')prop='<path d="M82 91h30l-5 18H87Z" fill="#c99a4e" stroke="#8f682f" stroke-width="2"/><path d="M87 91q10-18 20 0 M92 94v12 M100 94v12" fill="none" stroke="#8f682f" stroke-width="2"/>';
+ if(c.propId==='tablet')prop='<path d="M84 82 Q96 76 108 82 V109 Q96 114 84 109Z" fill="#c5a77b" stroke="#806747" stroke-width="2"/><path d="M91 89h10 M91 96h10 M91 103h10" stroke="#806747" stroke-width="2"/>';
+ let fringe='';
+ if(c.hairStyle==='short')fringe=`<path d="M31 41 Q28 17 48 18 Q60 8 76 20 Q90 23 89 42 Q78 32 70 35 Q57 25 47 35 Q38 31 31 41Z" fill="${hair}"/>`;
+ if(c.hairStyle==='curly')fringe=`<path d="M30 42 Q25 18 39 18 Q44 7 55 16 Q66 5 76 18 Q92 17 90 42 Q80 34 75 40 Q66 28 59 36 Q49 27 43 40 Q36 34 30 42Z" fill="${hair}"/><g fill="${hair}"><circle cx="39" cy="24" r="7"/><circle cx="51" cy="17" r="8"/><circle cx="64" cy="18" r="8"/><circle cx="77" cy="25" r="7"/></g>`;
+ if(c.hairStyle==='long')fringe=`<path d="M30 43 Q25 13 58 12 Q91 12 90 42 Q78 31 68 31 Q57 23 47 33 Q37 31 30 43Z" fill="${hair}"/><path d="M72 29 Q84 37 82 56" fill="none" stroke="${hair}" stroke-width="7" stroke-linecap="round"/>`;
+ if(c.hairStyle==='braid')fringe=`<path d="M30 42 Q25 14 59 12 Q92 14 90 42 Q77 30 67 32 Q56 25 47 34 Q37 31 30 42Z" fill="${hair}"/><path d="M33 46 Q25 58 31 70 M87 46 Q95 58 89 70" fill="none" stroke="${hair}" stroke-width="6" stroke-linecap="round"/>`;
+ if(c.hairStyle==='bun')fringe=`<path d="M30 42 Q25 15 60 13 Q95 15 90 42 Q78 30 67 32 Q55 24 46 34 Q37 31 30 42Z" fill="${hair}"/><circle cx="60" cy="12" r="10" fill="${hair}"/>`;
+ const hairDetails=c.hairStyle==='bald'?'':`<g fill="${hair}">${hairBack}</g>`;
+ const faceShape=`<ellipse cx="60" cy="${headY}" rx="${headRx}" ry="${headRy}" fill="${skin}" stroke="#754d3c" stroke-width="1.8"/>`;
+ const eyeBrows=`<path d="M40 39q8-5 16 0 M64 39q8-5 16 0" fill="none" stroke="${hair}" stroke-width="3.5" stroke-linecap="round"/>`;
+ const outfit=`<path d="M14 120 Q16 88 39 83 L81 83 Q104 88 106 120Z" fill="${robe}" stroke="#745b40" stroke-width="2"/><path d="M37 86 Q60 104 83 86" fill="none" stroke="${mantle}" stroke-width="13"/><path d="M60 97v23" stroke="#f1dfab" stroke-width="3"/>`;
+ const genderDetail=gender==='female'?'<path d="M39 88 Q60 100 81 88" fill="none" stroke="#fff4dd" stroke-width="2"/>':'';
+ return `<svg class="avatar ${size}" viewBox="0 0 120 120" role="img" aria-label="Avatar inspirado em ${escapeHtml(c.name||'personagem bíblico')}"><ellipse cx="60" cy="115" rx="34" ry="4" fill="#17213c" opacity=".13"/>${outfit}${genderDetail}${prop}<rect x="52" y="75" width="16" height="17" rx="6" fill="${skin}"/>${hairDetails}<circle cx="29" cy="52" r="7" fill="${skin}" stroke="#754d3c" stroke-width="1.5"/><circle cx="91" cy="52" r="7" fill="${skin}" stroke="#754d3c" stroke-width="1.5"/>${faceShape}${eyes}${eyeBrows}<path d="M58 56q2 3 4 0" stroke="#8e5a45" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M49 67 Q60 77 71 67" fill="none" stroke="#783e3d" stroke-width="2.5" stroke-linecap="round"/>${beard}${ageMarks}${fringe}${headwear}</svg>`;
+}
+function avatarCard(index,name,sub="",custom=null) {return `<div class="participant"><span class="avatar-wrap">${avatarSVG(index,'',custom)}</span><b>${escapeHtml(name)}</b><small>${escapeHtml(sub||CHARACTERS[index%12].type)}</small></div>`}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+function fillAvatarSelect(id,items,value){const el=$(id);if(!el)return;el.innerHTML=items.map(([label,val])=>`<option value="${val}">${label}</option>`).join('');el.value=value;}
+function renderAvatarEditor(){
+ $('baseCharacterGrid').innerHTML=CHARACTERS.map((c,i)=>`<button class="base-character ${myAvatar.baseIndex===i?'active':''}" onclick="chooseBaseCharacter(${i})">${avatarSVG(i)}<b>${escapeHtml(c.name)}</b></button>`).join('');
+ const selectData={
+  avGender:[['Masculina','male'],['Feminina','female']],avAge:[['Criança','child'],['Jovem','young'],['Adulto','adult'],['Idoso','elder']],
+  avSkin:PALETTES.skin.map(x=>[x[0],x[1]]),avHairColor:PALETTES.hair.map(x=>[x[0],x[1]]),avEyeColor:PALETTES.eyes.map(x=>[x[0],x[1]]),avBeardColor:PALETTES.hair.map(x=>[x[0],x[1]]),
+  avRobe:PALETTES.cloth.map(x=>[x[0],x[1]]),avMantle:PALETTES.cloth.map(x=>[x[0],x[1]])
+ };
+ Object.entries(selectData).forEach(([id,items])=>{let prop=({avGender:'gender',avAge:'age',avSkin:'skin',avHairColor:'hair',avEyeColor:'eyeColor',avBeardColor:'beardColor',avRobe:'robe',avMantle:'mantle'})[id];fillAvatarSelect(id,items,myAvatar[prop]||items[0][1]);});
+ ['avEyes','avHairStyle','avBeard','avHeadwear','avProp'].forEach(id=>{const map={avEyes:'eyeStyle',avHairStyle:'hairStyle',avBeard:'beard',avHeadwear:'headwear',avProp:'propId'};$(id).value=myAvatar[map[id]]||'none';});
+ updateAvatarPreview();
+}
+function updateAvatarPreview(){const idx=myAvatar.baseIndex||0;$('avatarPreview').innerHTML=avatarSVG(idx,'lg',myAvatar);$('avatarPreviewName').textContent=myAvatar.name||CHARACTERS[idx].name;$('avatarPreviewRole').textContent=(myAvatar.type||CHARACTERS[idx].type)+' · avatar personalizável';if($('joinAvatarMini'))$('joinAvatarMini').innerHTML=avatarSVG(idx,'sm',myAvatar);}
+function updateAvatarField(prop,value){myAvatar[prop]=value;updateAvatarPreview();}
+function chooseBaseCharacter(index){myAvatar={...CHARACTERS[index],baseIndex:index};renderAvatarEditor();}
+function saveMyAvatar(){saveAvatarLocal();updateAvatarPreview();toast('Seu personagem foi salvo!');}
+function resetAvatar(){myAvatar={...CHARACTERS[myAvatar.baseIndex||0],baseIndex:myAvatar.baseIndex||0};renderAvatarEditor();toast('Aparência original restaurada.');}
+function randomizeAvatar(){const idx=Math.floor(Math.random()*CHARACTERS.length);const pick=a=>a[Math.floor(Math.random()*a.length)];myAvatar={...CHARACTERS[idx],baseIndex:idx,age:pick(['child','young','adult','elder']),hairStyle:pick(HAIR_STYLES),skin:pick(PALETTES.skin.map(x=>x[1])),hair:pick(PALETTES.hair.map(x=>x[1])),eyeColor:pick(PALETTES.eyes.map(x=>x[1])),eyeStyle:pick(['round','soft','almond']),beard:CHARACTERS[idx].gender==='female'?'none':pick(['none','stubble','short','full','mustache']),beardColor:pick(PALETTES.hair.map(x=>x[1])),robe:pick(PALETTES.cloth.map(x=>x[1])),mantle:pick(PALETTES.cloth.map(x=>x[1])),headwear:pick(['none','band','veil','crown','priest']),propId:pick(Object.keys(PROP_LABELS))};renderAvatarEditor();toast('Nova combinação criada!');}
+
+const D={lessons:[],sessions:[]},V={rl:0,rs:-1,el:0,user:null,pin:null,pl:[],room:null,lesson:null,qi:0,my:{},sel:null,tl:25,rem:0};
+const esc=escapeHtml,on=id=>$(id).classList.contains('active'),setT=(id,t)=>{const e=$(id);if(e)e.textContent=t};
+const av=(a,s)=>avatarSVG((a&&a.baseIndex)||0,'sm',a);
+const pts=(c,a,t,tl)=>c===a?Math.max(500,Math.round(1000*(1-t/(tl*2)))):0;
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(V.tt);V.tt=setTimeout(()=>t.classList.remove('show'),2800)}
+/* ---------- relatórios ---------- */
+const hits=p=>p.ans.filter(a=>a.ok).length;
+function vRep(){
+ if(!D.sessions.length)return `<div class="card"><h2>Relatórios</h2><p>Ainda não há aulas registradas. Jogue um quiz até o final e o relatório da aula aparece aqui.</p></div>`;
+ const l=D.lessons[V.rl]||D.lessons[0];const ss=D.sessions.filter(s=>s.lid===l.id);
+ let h=`<div class="card"><h2>Relatório por aula</h2><select onchange="V.rl=+this.value;V.rs=-1;draw()">${D.lessons.map((x,i)=>`<option value="${i}" ${x.id===l.id?"selected":""}>${esc(x.title)}</option>`).join("")}</select>`;
+ if(!ss.length)return h+`<p class="hint">Esta lição ainda não foi aplicada.</p></div>`+evo();
+ const i=V.rs>=0&&V.rs<ss.length?V.rs:ss.length-1,s=ss[i],n=s.players.length;
+ h+=`<select onchange="V.rs=+this.value;draw()">${ss.map((x,j)=>`<option value="${j}" ${j===i?"selected":""}>${new Date(x.date).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"})}${x.demo?" (demonstração)":""}</option>`).join("")}</select></div>`;
+ const pc=s.qs.map((q,k)=>Math.round(s.players.filter(p=>p.ans[k]&&p.ans[k].ok).length/n*100));
+ const weak=pc.map((v,k)=>[v,k]).filter(x=>x[0]<60).sort((a,b)=>a[0]-b[0]);
+ const avg=Math.round(s.players.reduce((t,p)=>t+hits(p),0)/n/s.qs.length*100);
+ h+=`<div class="card"><h3>Retorno da turma</h3><p>Média de acertos: <b>${avg}%</b> · ${n} aluno(s)</p>
+ <div class="fb">${weak.length?`<b>Precisa reforçar:</b><br>`+weak.map(x=>`P${x[1]+1} (${x[0]}%): ${esc(s.qs[x[1]].q)}<br><span class="hint">Resposta certa: ${esc(s.qs[x[1]].t)}</span>`).join("<br>"):"<b>Ótimo resultado.</b> A turma acertou bem todos os pontos da lição."}</div></div>
+ <div class="card"><h3>Acertos por pergunta</h3>${pc.map((v,k)=>`<div class="rep"><b>P${k+1}</b><div class="t"><i style="width:${v}%;background:${v<50?"var(--bad)":v<75?"var(--gold)":"var(--ok)"}"></i></div><span>${v}%</span></div>`).join("")}</div>
+ <div class="card"><h3>Retorno por aluno</h3>${[...s.players].sort((a,b)=>b.score-a.score).map(p=>{const e=p.ans.map((a,k)=>a.ok?null:"P"+(k+1)).filter(Boolean),pt=hits(p)/s.qs.length;
+  return `<div class="row"><span>${av(p.av,40)}</span><div class="nm">${esc(p.name)} <span class="hint">${hits(p)}/${s.qs.length} · ${p.score} pts</span><div class="hint">${pt>=.8?"Muito bem.":pt>=.6?"Bom. Revisar "+e.join(", ")+".":"Precisa rever a lição. Errou "+e.join(", ")+"."}</div></div></div>`}).join("")}</div>
+ <div class="card"><h3>O que cada aluno marcou</h3><div class="scroll"><table><tr><th>Aluno</th>${s.qs.map((_,k)=>`<th>P${k+1}</th>`).join("")}</tr>
+ ${s.players.map(p=>`<tr><td>${esc(p.name)}</td>${p.ans.map(a=>`<td><span class="c" style="background:${a.c===null?"#888":a.ok?"var(--ok)":"var(--bad)"}">${a.c===null?"–":L[a.c]}</span></td>`).join("")}</tr>`).join("")}</table></div></div>`;
+ return h+evo();
+}
+function evo(){
+ const real=D.sessions.filter(s=>!s.demo),src=real.length?real:D.sessions;
+ const ls=D.lessons.filter(l=>src.some(s=>s.lid===l.id)),nm={};
+ src.forEach(s=>s.players.forEach(p=>{(nm[p.name]=nm[p.name]||{})[s.lid]=Math.round(hits(p)/s.qs.length*100)}));
+ const names=Object.keys(nm);if(!names.length)return"";
+ return `<div class="card"><h3>Evolução por aluno</h3><p class="hint">% de acertos na última aplicação de cada lição${real.length?"":" (inclui demonstração)"}.</p><div class="scroll"><table><tr><th>Aluno</th>${ls.map(l=>`<th>${esc(l.title.split("·")[0])}</th>`).join("")}</tr>
+ ${names.map(n=>`<tr><td>${esc(n)}</td>${ls.map(l=>{const v=nm[n][l.id];return `<td>${v==null?"–":`<b style="color:${v<60?"var(--bad)":v>=80?"var(--ok)":"var(--ink)"}">${v}%</b>`}</td>`}).join("")}</tr>`).join("")}</table></div></div>`;
+}
+
+function go(id){
+ if(id==='home'&&!leave())return;
+ if(id==='setup'&&!V.user)id='login';
+ if(id==='setup')prepSetup();
+ document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id===id));
+ if(id==='avatar')renderAvatarEditor();
+ if(id==='join'){updateAvatarPreview();if(!$('nick').value)$('nick').value=localStorage.getItem('selah.nick')||''}
+ if(id==='lessons'||id==='reports')draw();
+ scrollTo(0,0)}
+function draw(){if(on('reports'))$('reportsBox').innerHTML=D.lessons.length?vRep():'<div class="card">Crie uma lição primeiro.</div>';else if(on('lessons'))renderLessons()}
+async function login(){try{await signInWithEmailAndPassword(auth,$('lgEmail').value.trim(),$('lgPw').value)}catch(e){setT('lgErr','E-mail ou senha incorretos.')}}
+async function logout(){await signOut(auth);location.reload()}
+let started=false;
+onAuthStateChanged(auth,u=>{V.user=u&&u.email===TEACHER?u:null;
+ ['navT','navR','navX'].forEach(id=>$(id).style.display=V.user?'':'none');
+ if(V.user){if(!started){started=true;
+  onSnapshot(collection(db,'lessons'),s=>{D.lessons=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.title.localeCompare(b.title));
+   if(!D.lessons.length&&!V.seeded){V.seeded=1;setDoc(doc(db,'lessons','l5'),{title:'Lição 5 · O batismo de Jesus',qs:QUESTIONS})}draw()});
+  onSnapshot(query(collection(db,'sessions'),orderBy('date')),s=>{D.sessions=s.docs.map(d=>d.data());draw()})}
+  if(on('login'))go('setup')}});
+/* lições */
+const lref=()=>doc(db,'lessons',D.lessons[V.el].id);
+function renderLessons(){
+ const ls=D.lessons;if(V.el>=ls.length)V.el=0;const l=ls[V.el];
+ $('lessonsBox').innerHTML=`<div class="card"><div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">${ls.map((x,i)=>`<button class="btn btn-sm ${i===V.el?'btn-gold':'btn-light'}" onclick="V.el=${i};draw()">${esc(x.title)}</button>`).join('')||'<span class="hint">Carregando lições…</span>'}</div>
+ <input id="nl" placeholder="Ex.: Lição 6 · O significado do batismo"><button class="btn btn-blue btn-sm" onclick="addL()">Criar nova lição</button></div>`+(l?`
+ <div class="card"><div class="row qi"><h3 style="margin:0">${esc(l.title)}</h3><button class="btn btn-red btn-sm" onclick="delL()">Apagar lição</button></div><p class="hint">${l.qs.length} perguntas</p>
+ ${l.qs.map((q,i)=>`<div class="row qi"><div><b>${i+1}.</b> ${esc(q.q)}<div class="hint">Certa: ${esc(q.o[q.a])}</div></div><button class="btn btn-red btn-sm" onclick="delQ(${i})" aria-label="Apagar pergunta ${i+1}">Apagar</button></div>`).join('')}</div>
+ <div class="card"><h3>Nova pergunta</h3><input id="eq" placeholder="Digite a pergunta">${[0,1,2,3].map(i=>`<input id="eo${i}" placeholder="Alternativa ${L[i]}">`).join('')}
+ <select id="ea">${[0,1,2,3].map(i=>`<option value="${i}">Resposta certa: ${L[i]}</option>`).join('')}</select>
+ <input id="ewhy" placeholder="Explicação que aparece após a resposta (opcional)"><input id="eref" placeholder="Referência. Ex.: Mateus 3:16 (opcional)">
+ <button class="btn btn-gold btn-block" onclick="addQ()">Adicionar pergunta</button><p id="em2" class="hint"></p></div>`:'');
+}
+async function addL(){const t=$('nl').value.trim();if(t)await addDoc(collection(db,'lessons'),{title:t,qs:[]})}
+async function delL(){if(confirm('Apagar esta lição? Os relatórios já feitos continuam salvos.')){const id=D.lessons[V.el].id;V.el=0;await deleteDoc(doc(db,'lessons',id))}}
+async function addQ(){const q=$('eq').value.trim(),o=[0,1,2,3].map(i=>$('eo'+i).value.trim());if(!q||o.some(x=>!x)){setT('em2','Preencha a pergunta e as quatro alternativas.');return}
+ await updateDoc(lref(),{qs:[...D.lessons[V.el].qs,{q,o,a:+$('ea').value,why:$('ewhy').value.trim(),ref:$('eref').value.trim()}]})}
+async function delQ(i){await updateDoc(lref(),{qs:D.lessons[V.el].qs.filter((_,k)=>k!==i)})}
+/* professor: sala */
+const rref=()=>doc(db,'rooms',V.pin);
+function prepSetup(){
+ $('lesson').innerHTML=D.lessons.map(l=>`<option value="${l.id}">${esc(l.title)} (${l.qs.length})</option>`).join('');
+ const sync=()=>{const l=D.lessons.find(x=>x.id===$('lesson').value);if(!l)return;setT('pvTitle',l.title);
+  const n=l.qs.length,o=[...new Set([5,10,n].filter(x=>x<=n&&x>0))].sort((a,b)=>a-b);
+  $('questionCount').innerHTML=o.map(x=>`<option value="${x}" ${x===o[o.length-1]?'selected':''}>${x===n?'Todas ('+n+')':x+' perguntas'}</option>`).join('');setT('previewQCount',o[o.length-1]||0)};
+ $('lesson').onchange=sync;sync()}
+async function createRoom(){
+ const l=D.lessons.find(x=>x.id===$('lesson').value);if(!l||!l.qs.length){toast('Escolha uma lição com perguntas.');return}
+ const qs=l.qs.slice(0,+$('questionCount').value||l.qs.length),tl=+$('timeLimit').value,pin=String(100000+Math.floor(Math.random()*900000));
+ V.pin=pin;V.lesson={...l,qs};V.tl=tl;V.pl=[];V.qi=0;V.room={state:'lobby'};
+ try{await setDoc(doc(db,'rooms',pin),{title:l.title,tl,qs:qs.map(q=>({q:q.q,o:q.o})),state:'lobby',qi:0,reveals:{},board:[]});
+  await setDoc(doc(db,'rooms',pin,'secret','key'),{ans:qs.map(q=>q.a)})}catch(e){toast('Erro ao criar a sala. Confira as regras do Firestore.');V.pin=null;return}
+ V.u2=onSnapshot(collection(db,'rooms',pin,'players'),s=>{V.pl=s.docs.map(d=>({id:d.id,...d.data()}));renderParticipants();updateHost()});
+ setT('roomPin',pin.slice(0,3)+' '+pin.slice(3));setT('siteUrl',location.host+location.pathname);go('lobby')}
+function renderParticipants(){setT('playerCount',V.pl.length);const e=$('participants');if(e)e.innerHTML=V.pl.map(p=>avatarCard((p.avatar&&p.avatar.baseIndex)||0,p.name,(p.avatar&&p.avatar.type)||'',p.avatar)).join('')}
+function copyPin(){navigator.clipboard&&navigator.clipboard.writeText(V.pin);toast('PIN copiado!')}
+function startGame(){if(!V.pl.length){toast('Aguarde ao menos um aluno entrar.');return}startQ(0)}
+async function startQ(i){V.qi=i;V.room={state:'q'};await updateDoc(rref(),{state:'q',qi:i});
+ const q=V.lesson.qs[i];setT('hostTitle',V.lesson.title);setT('qIndex',i+1);setT('qTotal',V.lesson.qs.length);setT('sideQuestion',(i+1)+'/'+V.lesson.qs.length);setT('hostQuestion',q.q);
+ $('hostAnswers').innerHTML=q.o.map((a,k)=>`<button class="answer ${CL[k]}" disabled><span class="shape">${SH[k]}</span><span>${esc(a)}</span></button>`).join('');
+ $('revealBtn').disabled=false;$('hostResultSide').innerHTML='<p class="small muted" style="margin-top:15px">A distribuição das respostas aparece aqui após revelar.</p>';
+ updateHost();go('hostgame');clearInterval(V.ti);V.rem=V.tl;tickH();V.ti=setInterval(()=>{V.rem--;tickH();if(V.rem<=0)revealAnswer()},1000)}
+function tickH(){setT('hostTimer','⏱ '+Math.max(0,V.rem)+'s');$('progress').style.width=Math.max(0,V.rem/V.tl*100)+'%'}
+function updateHost(){if(!V.room||V.room.state!=='q')return;const n=V.pl.length,k=V.pl.filter(p=>p.ans&&p.ans[V.qi]).length;
+ setT('answeredCount',k);setT('totalCount',n);setT('sideAnswered',k);setT('sidePlayers',n);if(n&&k===n&&on('hostgame'))revealAnswer()}
+function scores(){return V.pl.map(p=>{let s=0;const ans=V.lesson.qs.map((q,i)=>{const r=p.ans&&p.ans[i],c=r?r.c:null,pp=r?pts(c,q.a,r.t,V.tl):0;s+=pp;return{c,ok:c===q.a,pts:pp}});return{name:p.name,av:p.avatar,score:s,ans}}).sort((a,b)=>b.score-a.score)}
+async function revealAnswer(){
+ if(!V.room||V.room.state!=='q')return;V.room.state='result';clearInterval(V.ti);
+ const q=V.lesson.qs[V.qi],sc=scores(),cnt=[0,1,2,3].map(k=>V.pl.filter(p=>p.ans&&p.ans[V.qi]&&p.ans[V.qi].c===k).length),tot=cnt.reduce((a,b)=>a+b,0);
+ setT('revealQuestion',q.q);setT('correctAnswer','Resposta correta: '+q.o[q.a]);setT('explanation',(q.why||'')+(q.ref?' ('+q.ref+')':''));
+ setT('revealTitle',cnt[q.a]+' de '+V.pl.length+' respostas corretas');setT('nextBtn',V.qi+1<V.lesson.qs.length?'Próxima pergunta →':'Ver pódio final →');
+ $('distribution').innerHTML=cnt.map((n,i)=>`<div style="margin:12px 0"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:800"><span>${SH[i]} ${esc(q.o[i])}</span><span>${n}</span></div><div class="bar"><i style="width:${V.pl.length?n/V.pl.length*100:0}%;background:${['#e64b5d','#2774de','#dca51d','#269b62'][i]}"></i></div></div>`).join('');
+ go('reveal');
+ try{await updateDoc(rref(),{state:'result',['reveals.'+V.qi]:{a:q.a,why:q.why||'',ref:q.ref||''},board:sc.slice(0,5).map(p=>({name:p.name,av:p.av,score:p.score}))})}catch(e){toast('Falha ao enviar o resultado.')}}
+function advanceAfterReveal(){if(V.qi+1>=V.lesson.qs.length){finishGame();return}
+ $('leaderRows').innerHTML=scores().map((p,i)=>`<div class="leader-row"><div class="rank-num">${i+1}</div><span class="avatar-wrap">${av(p.av)}</span><div class="who">${esc(p.name)}</div><div class="score">${p.score} pts</div></div>`).join('');go('leaderboard')}
+function continueFromBoard(){startQ(V.qi+1)}
+async function finishGame(){
+ const sc=scores();V.room={state:'end'};
+ const pl=[sc[1],sc[0],sc[2]],cls=['second','first','third'];
+ $('finalPodium').innerHTML=pl.map((p,i)=>p?`<div class="podium-place ${cls[i]}"><span class="avatar-wrap">${av(p.av)}</span><strong>${i===1?'1º':i===0?'2º':'3º'}</strong><b>${esc(p.name)}</b><small>${p.score} pontos</small></div>`:'').join('');
+ go('podium');
+ try{await updateDoc(rref(),{state:'end',board:sc.map(p=>({name:p.name,av:p.av,score:p.score}))});
+  await addDoc(collection(db,'sessions'),{lid:V.lesson.id,date:new Date().toISOString(),demo:false,qs:V.lesson.qs.map(q=>({q:q.q,o:q.o,t:q.o[q.a],a:q.a})),players:sc})}catch(e){toast('Falha ao salvar o relatório.')}}
+function showSummary(){V.rl=Math.max(0,D.lessons.findIndex(l=>l.id===V.lesson.id));V.rs=-1;go('reports')}
+function leave(){if(V.pin&&V.room&&!['lobby','end'].includes(V.room.state)&&!confirm('Encerrar a partida em andamento?'))return false;
+ if(V.pin){clearInterval(V.ti);V.u2&&V.u2();const p=V.pin;V.pin=null;V.room=null;deleteDoc(doc(db,'rooms',p,'secret','key')).then(()=>deleteDoc(doc(db,'rooms',p))).catch(()=>{})}return true}
+/* aluno */
+async function joinRoom(){
+ const pin=$('joinPin').value.replace(/\D/g,''),nm=$('nick').value.trim();
+ if(pin.length<6||!nm){toast('Digite o PIN de 6 números e seu apelido.');return}
+ try{if(!auth.currentUser||auth.currentUser.email)await signInAnonymously(auth);
+  const snap=await getDoc(doc(db,'rooms',pin));if(!snap.exists()){toast('PIN não encontrado. Confira com o professor.');return}
+  V.spin=pin;V.uid=auth.currentUser.uid;V.sname=nm;V.sroom=snap.data();V.my={};V.sel=null;if(V.sroom.state==='q')V.t0=Date.now();
+  await setDoc(doc(db,'rooms',pin,'players',V.uid),{name:nm,avatar:myAvatar,ans:{}});
+  saveAvatarLocal();try{localStorage.setItem('selah.nick',nm)}catch(e){}
+  onSnapshot(doc(db,'rooms',pin),s=>{const r=s.data();if(!r)return;
+   if(r.state==='q'&&(V.sroom.state!=='q'||V.sroom.qi!==r.qi)){V.t0=Date.now();V.sel=null}
+   V.sroom=r;renderStudent()});
+  setT('stuName',nm);go('student');renderStudent();clearInterval(V.tk);
+  V.tk=setInterval(()=>{const r=V.sroom;if(!r||r.state!=='q')return;const rem=Math.max(0,r.tl-Math.floor((Date.now()-V.t0)/1000));setT('studentTimer','⏱ '+rem+'s');$('studentProgress').style.width=rem/r.tl*100+'%'},500)
+ }catch(e){toast('Não foi possível entrar. Confira o PIN e a internet.')}}
+async function studentPick(k){const r=V.sroom;if(V.sel!=null||r.state!=='q')return;const t=Math.min(r.tl,(Date.now()-V.t0)/1000);V.sel=k;V.my[r.qi]={c:k,t};renderStudent();
+ try{await updateDoc(doc(db,'rooms',V.spin,'players',V.uid),{['ans.'+r.qi]:{c:k,t}})}catch(e){toast('Não consegui enviar sua resposta.')}}
+function renderStudent(){
+ const r=V.sroom;if(!r||!on('student'))return;const rv=r.reveals||{},i=r.qi,q=r.qs[i],A=$('studentAnswers'),Q=$('studentQuestion'),F=$('studentFeedback');setT('studentTitle',r.title);
+ if(r.state==='lobby'){setT('studentTimer','');Q.textContent='Você está dentro! Aguarde o professor iniciar.';A.innerHTML=`<div style="grid-column:1/-1;text-align:center">${avatarSVG(myAvatar.baseIndex||0,'lg',myAvatar)}<h2 style="color:#fff">${esc(V.sname)}</h2></div>`;F.innerHTML='';return}
+ if(r.state==='end'){const b=r.board||[],pos=b.findIndex(p=>p.name===V.sname);setT('studentTimer','');Q.textContent=pos>=0?'Fim! Você ficou em '+(pos+1)+'º lugar 🏆':'Fim do quiz!';
+  A.innerHTML=`<div style="grid-column:1/-1">${b.slice(0,5).map((p,k)=>`<div class="leader-row"><div class="rank-num">${k+1}</div><span class="avatar-wrap">${av(p.av)}</span><div class="who">${esc(p.name)}</div><div class="score">${p.score} pts</div></div>`).join('')}</div>`;F.innerHTML='';return}
+ Q.textContent=q.q;const rev=rv[i];
+ A.innerHTML=q.o.map((a,k)=>`<button class="answer student-answer ${CL[k]}${rev?(k===rev.a?' correct':V.sel===k?' wrong':''):''}" ${V.sel!=null||r.state!=='q'?'disabled':''} onclick="studentPick(${k})"><span class="shape">${SH[k]}</span><span>${esc(a)}</span></button>`).join('');
+ if(r.state==='q')F.innerHTML=V.sel!=null?'<div class="note" style="margin-top:12px">Resposta enviada! Aguarde o professor revelar.</div>':'';
+ else{const m=V.my[i],ok=m&&m.c===rev.a,tot=Object.keys(V.my).reduce((s,k)=>s+(rv[k]?pts(V.my[k].c,rv[k].a,V.my[k].t,r.tl):0),0);
+  F.innerHTML=`<div class="${ok?'result-correct':'note'}" style="margin-top:12px"><b>${!m?'Tempo esgotado':ok?'Acertou! +'+pts(m.c,rev.a,m.t,r.tl)+' pontos':'Não foi dessa vez'}</b> · total ${tot} pts<br>${esc(rev.why||'')} ${rev.ref?'('+esc(rev.ref)+')':''}</div>`}}
+Object.assign(window,{D,V,draw,go,toast,login,logout,addL,delL,addQ,delQ,createRoom,startGame,revealAnswer,advanceAfterReveal,continueFromBoard,showSummary,copyPin,joinRoom,studentPick,randomizeAvatar,saveMyAvatar,resetAvatar,chooseBaseCharacter,updateAvatarField});
+$('lgEmail').value=TEACHER;renderAvatarEditor();updateAvatarPreview();
+</script></body></html>
